@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product Options</title>
+</head>
+<body>
+  <h1>Add Product Options to Draft Order</h1>
+  <form action="/add-options" method="POST">
+    <input type="hidden" name="draft_order_id" value="<%= draftOrder.id %>">
+    <% draftOrder.line_items.forEach((item, i) => { %>
+      <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <h3><%= item.title %></h3>
+        <input type="hidden" name="variant_id_<%= i %>" value="<%= item.variant_id %>">
+        <input type="hidden" name="quantity_<%= i %>" value="<%= item.quantity %>">
+
+        <label>Card message:</label><br>
+        <textarea name="card_<%= i %>" rows="3" cols="40"></textarea><br><br>
+
+        <label>Additional comments:</label><br>
+        <textarea name="comments_<%= i %>" rows="3" cols="40"></textarea><br>
+      </div>
+    <% }) %>
+
+    <button type="submit">Save Options</button>
+  </form>
+
+  <br>
+  <a href="https://<%= shop %>/admin/draft_orders/<%= draftOrder.id %>" target="_blank">
+    <button type="button">Back to Draft Order</button>
+  </a>
+</body>
+</html>
